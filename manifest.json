@@ -1,0 +1,25 @@
+{
+  "name": "منظومة خدمة المواطنين - حزب مستقبل وطن",
+  "short_name": "خدمة المواطنين",
+  "description": "المنصة الإلكترونية الرسمية لتلقي وفحص ومعالجة شكاوى وطلبات المواطنين - حزب مستقبل وطن",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#1e3a8a",
+  "dir": "rtl",
+  "lang": "ar-EG",
+  "icons": [
+    {
+      "src": "assets/logo.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/logo.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ]
+}

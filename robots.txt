@@ -1,0 +1,11 @@
+# Robots.txt - منظومة خدمة المواطنين حزب مستقبل وطن
+User-agent: *
+Allow: /
+Allow: /index.html
+Allow: /privacy.html
+Allow: /terms.html
+Disallow: /admin.html
+Disallow: /admin.js
+
+# Sitemap location
+Sitemap: https://citizens-service.vercel.app/sitemap.xml

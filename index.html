@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>منظومة خدمة المواطنين والشكاوى - حزب مستقبل وطن</title>
+  <meta name="description" content="المنظومة الإلكترونية الرسمية لتلقي ومعالجة طلبات وشكاوى المواطنين - أمانة العمل الجماهيري والمتابعة بحزب مستقبل وطن بجمهورية مصر العربية.">
+  <meta name="keywords" content="مستقبل وطن, خدمة المواطنين, شكاوى مستقبل وطن, أمانة العمل الجماهيري, شكاوى المواطنين مصر">
+  <meta name="author" content="حزب مستقبل وطن">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://citizens-service.vercel.app/">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ar_EG">
+  <meta property="og:url" content="https://citizens-service.vercel.app/">
+  <meta property="og:title" content="منظومة خدمة المواطنين والشكاوى - حزب مستقبل وطن">
+  <meta property="og:description" content="المنصة الإلكترونية لتلقي وفحص ومعالجة شكاوى وطلبات المواطنين ومتابعة القرارات لحظة بلحظة.">
+  <meta property="og:image" content="assets/banner.jpg">
+  <meta property="og:site_name" content="حزب مستقبل وطن">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="منظومة خدمة المواطنين والشكاوى - حزب مستقبل وطن">
+  <meta name="twitter:description" content="نعمل من أجل مصر - قدّم شكواك وتابع مراحل الفحص والإنجاز إلكترونياً.">
+  <meta name="twitter:image" content="assets/banner.jpg">
+
+  <!-- PWA & Mobile Theme -->
+  <meta name="theme-color" content="#1e3a8a">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/jpeg" href="assets/logo.jpg">
+  <link rel="apple-touch-icon" href="assets/logo.jpg">
+
+  <!-- Structured Data (JSON-LD) for Google SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://citizens-service.vercel.app/#organization",
+        "name": "حزب مستقبل وطن",
+        "alternateName": "Future of the Nation Party",
+        "url": "https://citizens-service.vercel.app/",
+        "logo": "https://citizens-service.vercel.app/assets/logo.jpg",
+        "sameAs": [
+          "https://www.facebook.com/"
+        ],
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "Citizen Support",
+          "availableLanguage": ["Arabic"]
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://citizens-service.vercel.app/#website",
+        "url": "https://citizens-service.vercel.app/",
+        "name": "منظومة خدمة المواطنين - حزب مستقبل وطن",
+        "publisher": {
+          "@id": "https://citizens-service.vercel.app/#organization"
+        },
+        "inLanguage": "ar-EG"
+      },
+      {
+        "@type": "GovernmentService",
+        "name": "خدمة تقديم ومتابعة شكاوى المواطنين",
+        "serviceType": "Citizen Grievances & Inquiries",
+        "provider": {
+          "@id": "https://citizens-service.vercel.app/#organization"
+        },
+        "areaServed": {
+          "@type": "Country",
+          "name": "Egypt"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <!-- Toast Notification System -->
+  <div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Header -->
+  <header class="main-header" role="banner">
+    <div class="container">
+      <div class="header-inner">
+        <a href="index.html" class="header-brand" aria-label="الصفحة الرئيسية لمنظومة خدمة المواطنين">
+          <img src="assets/logo.jpg" alt="شعار حزب مستقبل وطن" class="header-logo-img">
+          <div class="header-titles">
+            <h1>منظومة خدمة المواطنين - حزب مستقبل وطن</h1>
+            <p>أمانة العمل الجماهيري والمتابعة - معاً نبني مصر</p>
+          </div>
+        </a>
+        <div class="header-actions">
+          <div class="theme-toggle" role="group" aria-label="تبديل وضع العرض">
+            <button class="theme-btn" data-theme-value="light" onclick="setTheme('light')" title="الوضع النهاري" aria-label="الوضع النهاري">☀️</button>
+            <button class="theme-btn" data-theme-value="dark" onclick="setTheme('dark')" title="الوضع الليلي" aria-label="الوضع الليلي">🌙</button>
+            <button class="theme-btn" data-theme-value="system" onclick="setTheme('system')" title="تلقائي حسب نظام التشغيل" aria-label="تلقائي">💻</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section" aria-labelledby="heroTitle">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span>⭐</span>
+            <span>حزب مستقبل وطن - في خدمة المواطن المصري</span>
+          </div>
+          <h2 id="heroTitle" class="hero-title">منظومة تلقي ومعالجة طلبات وشكاوى المواطنين</h2>
+          <p class="hero-subtitle">
+            نعمل من أجل مصر. يمكنك تقديم طلبك أو شكواك مباشرة للأمانات المختصة ومتابعة مراحل الفحص والإنجاز لحظة بلحظة وبكل شفافية.
+          </p>
+        </div>
+        <div class="hero-banner-container">
+          <img src="assets/banner.jpg" alt="بانر حزب مستقبل وطن - نعمل من أجل مصر" class="hero-banner-img" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Navigation Tabs -->
+  <div class="tabs-container">
+    <div class="container">
+      <nav class="tabs-nav" role="tablist" aria-label="أقسام المنظومة">
+        <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="tabNewRequest" data-tab="newRequest" onclick="switchTab('newRequest')">
+          <span>📝</span> تقديم شكوى / طلب جديد
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tabTracking" data-tab="tracking" onclick="switchTab('tracking')">
+          <span>🔍</span> الاستعلام والمتابعة اللحظية
+        </button>
+        <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tabOffices" data-tab="offices" onclick="switchTab('offices')">
+          <span>🏢</span> مقرات أمانات الحزب
+        </button>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Main Content Areas -->
+  <main class="container" role="main">
+    <!-- ===== Tab 1: New Request Form ===== -->
+    <div class="tab-content active" id="tabNewRequest" role="tabpanel" aria-labelledby="tabNewRequest">
+      <div class="card">
+        <h3 class="card-title">
+          <span>📋</span> نموذج تقديم طلب / شكوى جديدة
+        </h3>
+        <p class="text-secondary" style="font-size: 0.9rem; margin-bottom: var(--space-lg);">
+          يرجى ملء البيانات بدقة لضمان سرعة الفحص والتنسيق المباشر مع الجهات التنفيذية والأمانات المختصة:
+        </p>
+
+        <form id="complaintForm" onsubmit="return submitComplaint(event)" novalidate>
+          <div class="form-grid">
+            <!-- Full Name -->
+            <div class="form-group" id="grpName">
+              <label class="form-label" for="citizenName">الاسم الرباعي <span class="required">*</span></label>
+              <input type="text" class="form-input" id="citizenName" placeholder="أدخل اسمك رباعياً كما ببطاقة الرقم القومي" required>
+              <span class="form-error">يرجى كتابة الاسم الرباعي كاملاً وبشكل صحيح</span>
+            </div>
+
+            <!-- National ID -->
+            <div class="form-group" id="grpNationalId">
+              <label class="form-label" for="nationalId">الرقم القومي (14 رقم) <span class="required">*</span></label>
+              <input type="text" class="form-input" id="nationalId" placeholder="14 رقماً مصرياً صحيحاً" maxlength="14" required inputmode="numeric">
+              <span class="form-error">الرقم القومي غير صحيح (يجب أن يكون 14 رقماً وفقاً لبطاقة الرقم القومي المصرية)</span>
+            </div>
+
+            <!-- Phone -->
+            <div class="form-group" id="grpPhone">
+              <label class="form-label" for="citizenPhone">رقم الهاتف المحمول <span class="required">*</span></label>
+              <input type="tel" class="form-input" id="citizenPhone" placeholder="مثال: 01012345678" maxlength="11" required inputmode="tel">
+              <span class="form-error">أدخل رقم هاتف مصري صحيح (11 رقماً يبدأ بـ 010 أو 011 أو 012 أو 015)</span>
+            </div>
+
+            <!-- Governorate -->
+            <div class="form-group" id="grpGov">
+              <label class="form-label" for="governorate">المحافظة <span class="required">*</span></label>
+              <select class="form-select" id="governorate" required>
+                <option value="">اختر المحافظة</option>
+                <option value="القاهرة">القاهرة</option>
+                <option value="الجيزة">الجيزة</option>
+                <option value="الإسكندرية">الإسكندرية</option>
+                <option value="القليوبية">القليوبية</option>
+                <option value="الشرقية">الشرقية</option>
+                <option value="الدقهلية">الدقهلية</option>
+                <option value="البحيرة">البحيرة</option>
+                <option value="المنوفية">المنوفية</option>
+                <option value="الغربية">الغربية</option>
+                <option value="كفر الشيخ">كفر الشيخ</option>
+                <option value="دمياط">دمياط</option>
+                <option value="بورسعيد">بورسعيد</option>
+                <option value="الإسماعيلية">الإسماعيلية</option>
+                <option value="السويس">السويس</option>
+                <option value="شمال سيناء">شمال سيناء</option>
+                <option value="جنوب سيناء">جنوب سيناء</option>
+                <option value="الفيوم">الفيوم</option>
+                <option value="بني سويف">بني سويف</option>
+                <option value="المنيا">المنيا</option>
+                <option value="أسيوط">أسيوط</option>
+                <option value="سوهاج">سوهاج</option>
+                <option value="قنا">قنا</option>
+                <option value="الأقصر">الأقصر</option>
+                <option value="أسوان">أسوان</option>
+                <option value="البحر الأحمر">البحر الأحمر</option>
+                <option value="الوادي الجديد">الوادي الجديد</option>
+                <option value="مطروح">مطروح</option>
+              </select>
+              <span class="form-error">يرجى اختيار المحافظة</span>
+            </div>
+
+            <!-- District -->
+            <div class="form-group" id="grpDistrict">
+              <label class="form-label" for="district">المركز / القسم / الحي <span class="required">*</span></label>
+              <input type="text" class="form-input" id="district" placeholder="مثال: قسم مدينة نصر / مركز المنصورة" required>
+              <span class="form-error">يرجى إدخال المركز أو الحي</span>
+            </div>
+
+            <!-- Detailed Address -->
+            <div class="form-group" id="grpAddress">
+              <label class="form-label" for="address">العنوان بالتفصيل <span class="required">*</span></label>
+              <input type="text" class="form-input" id="address" placeholder="اسم الشارع، رقم العقار، أي علامة مميزة" required>
+              <span class="form-error">يرجى إدخال العنوان التفصيلي</span>
+            </div>
+
+            <!-- Category -->
+            <div class="form-group" id="grpCategory">
+              <label class="form-label" for="category">تصنيف الطلب <span class="required">*</span></label>
+              <select class="form-select" id="category" required>
+                <option value="">اختر التصنيف المناسب</option>
+                <option value="مياه وشرب وصرف صحي">مياه وشرب وصرف صحي</option>
+                <option value="كهرباء وطاقة">كهرباء وطاقة</option>
+                <option value="رصف وطرق وإنارة">رصف وطرق وإنارة</option>
+                <option value="صحة وعلاج على نفقة الدولة">صحة وعلاج على نفقة الدولة</option>
+                <option value="تعليم ومدارس">تعليم ومدارس</option>
+                <option value="تموين وتضامن اجتماعي">تموين وتضامن اجتماعي</option>
+                <option value="فرص عمل وتشغيل">فرص عمل وتشغيل</option>
+                <option value="خدمات أخرى">خدمات أخرى</option>
+              </select>
+              <span class="form-error">يرجى اختيار تصنيف الشكوى</span>
+            </div>
+
+            <!-- Priority -->
+            <div class="form-group" id="grpPriority">
+              <label class="form-label" for="priority">درجة الأهمية <span class="required">*</span></label>
+              <select class="form-select" id="priority" required>
+                <option value="">اختر درجة الأهمية</option>
+                <option value="عادي">عادي</option>
+                <option value="هام">هام</option>
+                <option value="عاجل جداً">عاجل جداً</option>
+              </select>
+              <span class="form-error">يرجى اختيار درجة الأهمية</span>
+            </div>
+
+            <!-- Subject -->
+            <div class="form-group full-width" id="grpSubject">
+              <label class="form-label" for="subject">عنوان الشكوى / موضوع الطلب <span class="required">*</span></label>
+              <input type="text" class="form-input" id="subject" placeholder="ملخص موجز لموضوع المشكلة أو الطلب" required>
+              <span class="form-error">يرجى كتابة عنوان الشكوى (4 أحرف على الأقل)</span>
+            </div>
+
+            <!-- Description -->
+            <div class="form-group full-width" id="grpDescription">
+              <label class="form-label" for="description">الشرح والتفاصيل الكاملة <span class="required">*</span></label>
+              <textarea class="form-textarea" id="description" placeholder="اشرح تفاصيل طلبك أو مشكلتك بدقة ليتم فحصها واتخاذ الإجراء اللازم..." required></textarea>
+              <span class="form-error">يرجى كتابة شرح كافٍ للمشكلة (10 أحرف على الأقل)</span>
+            </div>
+
+            <!-- File Upload -->
+            <div class="form-group full-width">
+              <label class="form-label">إرفاق مستندات أو صور داعمة (اختياري)</label>
+              <div class="file-upload-area" id="fileUploadArea" onclick="document.getElementById('fileInput').click()" role="button" tabindex="0" aria-label="رفع الملفات">
+                <div class="upload-icon">📎</div>
+                <p>اسحب المستندات أو الصور هنا أو <span style="color: var(--brand-blue-light); font-weight: 700;">اضغط للاختيار من جهازك</span></p>
+                <p style="font-size: 0.76rem; color: var(--text-tertiary); margin-top: 4px;">يقبل ملفات الصور والمستندات PDF حتى 5 ملفات</p>
+              </div>
+              <input type="file" id="fileInput" multiple accept="image/*,.pdf,.doc,.docx" style="display:none" onchange="handleFileSelect(event)">
+              <div class="file-preview-list" id="filePreviewList"></div>
+            </div>
+
+            <!-- Legal Consent Checkbox (Law 151 of 2020) -->
+            <div class="form-group full-width" id="grpConsent" style="margin-top: var(--space-sm);">
+              <label style="display: flex; align-items: flex-start; gap: 10px; cursor: pointer; font-size: 0.88rem; color: var(--text-secondary);">
+                <input type="checkbox" id="legalConsent" style="width: 18px; height: 18px; margin-top: 3px; accent-color: var(--brand-blue);" required>
+                <span>
+                  أقر بصحة البيانات المقدمة، وأوافق على معالجة واستخدام بياناتي لغرض فحص ومتابعة الشكوى وفقاً لأحكام
+                  <a href="privacy.html" target="_blank" style="font-weight: 700;">سياسة الخصوصية وقانون حماية البيانات الشخصية رقم 151 لسنة 2020</a>
+                  و<a href="terms.html" target="_blank" style="font-weight: 700;">الشروط والأحكام</a>.
+                </span>
+              </label>
+              <span class="form-error" id="consentError" style="margin-top: 4px;">يجب الموافقة على التعهد والإقرار قبل إرسال الطلب</span>
+            </div>
+          </div>
+
+          <div style="margin-top: var(--space-xl); display: flex; gap: var(--space-md); align-items: center; flex-wrap: wrap;">
+            <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
+              <span>📤</span> إرسال الطلب واعتماد البلاغ
+            </button>
+            <button type="reset" class="btn btn-outline" onclick="resetForm()">
+              <span>🔄</span> إعادة تعيين الحقول
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ===== Tab 2: Tracking & Inquiry ===== -->
+    <div class="tab-content" id="tabTracking" role="tabpanel" aria-labelledby="tabTracking">
+      <div class="card">
+        <h3 class="card-title">
+          <span>🔎</span> الاستعلام ومتابعة حالة الطلب
+        </h3>
+        <p class="text-secondary" style="font-size: 0.9rem; margin-bottom: var(--space-md);">
+          أدخل كود المتابعة (مثال: MW-2025-XXXX) أو رقم الهاتف المسجل به الطلب للاطلاع على حالة الشكوى والردود الرسمية:
+        </p>
+        <div class="form-grid" style="max-width: 620px;">
+          <div class="form-group">
+            <label class="form-label" for="trackingInput">كود المتابعة أو رقم الهاتف</label>
+            <input type="text" class="form-input" id="trackingInput" placeholder="أدخل كود المتابعة أو الهاتف">
+          </div>
+          <div class="form-group" style="justify-content: flex-end;">
+            <button class="btn btn-primary" onclick="searchComplaint()" style="height: 48px;">
+              <span>🔍</span> فحص وحالة الطلب
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tracking Result Container -->
+      <div class="hidden" id="trackingResult">
+        <div class="card" style="margin-top: var(--space-lg);">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: var(--space-md); margin-bottom: var(--space-lg); flex-wrap: wrap; gap: var(--space-sm);">
+            <h3 style="font-size: 1.25rem; font-weight: 800; display: flex; align-items: center; gap: var(--space-sm);">
+              <span>📄</span> بيانات البلاغ رقم:
+              <span id="trackingCode" style="color: var(--brand-blue-light); font-family: 'Cairo', monospace;"></span>
+            </h3>
+            <span id="trackingStatusBadge" class="badge"></span>
+          </div>
+
+          <!-- Citizen info view -->
+          <div class="tracking-info-grid" id="trackingInfoGrid"></div>
+
+          <!-- Stepper Progress (5 Steps) -->
+          <h4 style="font-size: 1rem; font-weight: 800; margin-bottom: var(--space-sm);">🚦 مراحل معالجة الطلب:</h4>
+          <div class="stepper" id="trackingStepper">
+            <div class="stepper-step" data-step="1">
+              <div class="stepper-circle">1</div>
+              <span class="stepper-label">قيد الاستلام</span>
+            </div>
+            <div class="stepper-step" data-step="2">
+              <div class="stepper-circle">2</div>
+              <span class="stepper-label">توجيه للأمانة المختصة</span>
+            </div>
+            <div class="stepper-step" data-step="3">
+              <div class="stepper-circle">3</div>
+              <span class="stepper-label">الفحص الميداني</span>
+            </div>
+            <div class="stepper-step" data-step="4">
+              <div class="stepper-circle">4</div>
+              <span class="stepper-label">التنسيق التنفيذي</span>
+            </div>
+            <div class="stepper-step" data-step="5">
+              <div class="stepper-circle">5</div>
+              <span class="stepper-label">تم الإنجاز والحل</span>
+            </div>
+          </div>
+
+          <!-- Official Response Box -->
+          <div class="official-response hidden" id="officialResponse">
+            <h4>✅ الرد والقرار الرسمي من أمانة الحزب</h4>
+            <p id="officialResponseText" style="margin-top: 4px; font-size: 0.95rem; font-weight: 500;"></p>
+            <div style="margin-top: var(--space-sm); font-size: 0.84rem; color: var(--text-tertiary);">
+              الأمانة المكلفة: <strong id="assignedDept" style="color: var(--text-primary);"></strong>
+            </div>
+          </div>
+
+          <!-- Timeline -->
+          <div style="margin-top: var(--space-xl);">
+            <h4 style="font-size: 1.05rem; font-weight: 800; margin-bottom: var(--space-md); display: flex; align-items: center; gap: var(--space-sm);">
+              <span>📅</span> السجل الزمني للتحركات والإجراءات
+            </h4>
+            <div class="timeline" id="trackingTimeline"></div>
+          </div>
+
+          <!-- Citizen Follow-up note -->
+          <div class="followup-section">
+            <h4>💬 إضافة تعقيب أو استفسار إضافي للطلب</h4>
+            <div style="display: flex; gap: var(--space-md); align-items: flex-end; flex-wrap: wrap;">
+              <div class="form-group" style="flex: 1; min-width: 250px;">
+                <textarea class="form-textarea" id="followupText" placeholder="اكتب استفسارك أو تعقيبك هنا..." style="min-height: 80px;"></textarea>
+              </div>
+              <button class="btn btn-primary" onclick="addFollowup()" style="height: 48px;">
+                <span>📩</span> إرسال التعقيب
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- No Result Card -->
+      <div class="hidden" id="trackingNotFound">
+        <div class="card" style="margin-top: var(--space-lg); text-align: center; padding: var(--space-2xl);">
+          <div style="font-size: 3.5rem; margin-bottom: var(--space-sm);">🔍</div>
+          <h3 style="font-size: 1.2rem; margin-bottom: var(--space-xs);">لم يتم العثور على أي شكوى مسجلة</h3>
+          <p class="text-secondary" style="font-size: 0.9rem;">تأكد من كتابة كود المتابعة بدقة (مثال: MW-2025-1234) أو رقم الهاتف المستخدم أثناء التقديم.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Tab 3: Offices ===== -->
+    <div class="tab-content" id="tabOffices" role="tabpanel" aria-labelledby="tabOffices">
+      <div class="card" style="margin-bottom: var(--space-lg);">
+        <h3 class="card-title">
+          <span>🏛️</span> مقرات أمانات حزب مستقبل وطن بالمحافظات
+        </h3>
+        <p class="text-secondary" style="font-size: 0.9rem;">
+          تسعد أمانات الحزب باستقبال السادة المواطنين في كافة المحافظات وتقديم كافة أوجه الدعم والمساندة الممكنة:
+        </p>
+      </div>
+      <div class="offices-grid" id="officesGrid"></div>
+    </div>
+  </main>
+
+  <!-- Footer with Legal Links & Compliance -->
+  <footer class="main-footer" role="contentinfo">
+    <div class="container">
+      <div style="display: flex; justify-content: center; gap: var(--space-lg); flex-wrap: wrap; margin-bottom: var(--space-sm); font-weight: 600;">
+        <a href="privacy.html" style="color: rgba(255,255,255,0.85);">🛡️ سياسة الخصوصية وحماية البيانات</a>
+        <span>|</span>
+        <a href="terms.html" style="color: rgba(255,255,255,0.85);">📜 الشروط والأحكام وميثاق الاستخدام</a>
+      </div>
+      <p style="font-size: 0.85rem; color: rgba(255,255,255,0.7);">
+        © 2025 جميع الحقوق محفوظة - <strong>حزب مستقبل وطن</strong> | أمانة العمل الجماهيري والمتابعة | جمهورية مصر العربية 🇪🇬
+      </p>
+      <p style="font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-top: 4px;">
+        المنظومة متوافقة مع أحكام قانون حماية البيانات الشخصية رقم 151 لسنة 2020 والمعايير الدستورية المصرية.
+      </p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
